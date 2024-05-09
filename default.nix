@@ -17,7 +17,7 @@ let
 
     text = ''
       # Clean the repository
-      rm -r dist
+      rm -rf dist
 
       python -m build
       twine upload dist/*
