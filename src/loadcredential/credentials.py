@@ -1,7 +1,8 @@
+import json
 import logging
 from os import environ as env
 from os import path
-from typing import Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -57,3 +58,17 @@ class Credentials:
             )
 
         return value
+
+    def get(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def get_json(self, key: str, default: Any = None) -> Any:
+        data = self.get(key)
+
+        if data is None:
+            return default
+
+        return json.loads(self[key])

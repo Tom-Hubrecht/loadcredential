@@ -1,6 +1,6 @@
 from .credentials import Credentials
 
-__VERSION__ = "1.0"
+__VERSION__ = "1.1"
 
 __all__ = [
     "__VERSION__",
