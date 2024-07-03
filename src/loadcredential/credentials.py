@@ -2,10 +2,11 @@ import json
 import logging
 from os import environ as env
 from os import path
-from typing import Any, Optional
+from typing import Any, Optional, TypeVar
 
 logger = logging.getLogger(__name__)
 
+T = TypeVar("T")
 
 class Credentials:
     """
@@ -59,7 +60,9 @@ class Credentials:
 
         return value
 
-    def get(self, key: str, default: Optional[str] = None) -> Optional[str]:
+    # TODO: Switch to type parameter syntax
+    # get[T](...) -> str | T:
+    def get(self, key: str, default: T = None) -> str | T:
         try:
             return self[key]
         except KeyError:
