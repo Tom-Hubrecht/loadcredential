@@ -72,13 +72,12 @@ class Credentials:
     def get_json(
         self, key: str, default: Any = None, fail_missing: bool = False
     ) -> Any:
-        data = self.get(key)
-
-        if data is None:
+        try:
+            return json.loads(self[key])
+        except KeyError:
             if fail_missing:
                 raise KeyError(
                     f"{key} not found, in the credentials directory or the environment."
                 )
-            return default
 
-        return json.loads(self[key])
+            return default
