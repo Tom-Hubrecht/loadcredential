@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
+
 class Credentials:
     """
     The main class used to read credentials.
@@ -68,10 +69,16 @@ class Credentials:
         except KeyError:
             return default
 
-    def get_json(self, key: str, default: Any = None) -> Any:
+    def get_json(
+        self, key: str, default: Any = None, fail_missing: bool = False
+    ) -> Any:
         data = self.get(key)
 
         if data is None:
+            if fail_missing:
+                raise KeyError(
+                    f"{key} not found, in the credentials directory or the environment."
+                )
             return default
 
         return json.loads(self[key])
